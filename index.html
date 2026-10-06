@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qvunex: what your GPUs were billed against what they served</title>
+<meta name="description" content="Qvunex measures self-hosted AI inference cost: billed GPU time against the work the server actually served. Cold starts, idle time, cost per request and per million tokens, from the server's own counters.">
+<style>
+  :root { --ink:#16181d; --muted:#5b616e; --line:#e3e5ea; --bg:#ffffff; --soft:#f5f6f8; --accent:#1f6f5c; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink:#eceef2; --muted:#a3a9b6; --line:#2b2f37; --bg:#111318; --soft:#181b21; --accent:#5cc4a5; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  main { max-width:720px; margin:0 auto; padding:48px 20px 64px; }
+  .brand { font-weight:700; letter-spacing:.02em; color:var(--accent); font-size:15px; text-transform:uppercase; }
+  h1 { font-size:32px; line-height:1.2; margin:12px 0 16px; }
+  h2 { font-size:20px; margin:40px 0 12px; }
+  p { margin:0 0 14px; }
+  .lead { font-size:19px; color:var(--muted); }
+  ul { padding-left:20px; margin:0 0 14px; }
+  li { margin:6px 0; }
+  .nums { display:grid; grid-template-columns:repeat(auto-fit, minmax(190px,1fr)); gap:12px; margin:20px 0 8px; }
+  .num { background:var(--soft); border:1px solid var(--line); border-radius:10px; padding:14px 16px; }
+  .num b { display:block; font-size:24px; }
+  .num span { color:var(--muted); font-size:14px; }
+  a { color:var(--accent); }
+  .cta { display:inline-block; margin-top:6px; padding:10px 16px; border-radius:8px; border:1px solid var(--accent); text-decoration:none; font-weight:600; }
+  footer { margin-top:48px; padding-top:16px; border-top:1px solid var(--line); color:var(--muted); font-size:14px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="brand">Qvunex</div>
+  <h1>What your GPUs were billed, against what they actually served.</h1>
+  <p class="lead">A GPU hour has one price. What it delivers does not. Qvunex measures self-hosted inference cost from the server's own counters: cold starts, idle time, cost per request and per million tokens.</p>
+
+  <div class="nums">
+    <div class="num"><b>97%</b><span>of one H100 cold wake was boot, before the server could answer</span></div>
+    <div class="num"><b>$1.26 vs $0.22</b><span>per 1M tokens, same H100 hour, 1 request vs 8 at once</span></div>
+    <div class="num"><b>5.7x</b><span>overstatement when cost is priced from one request's speed</span></div>
+  </div>
+  <p style="color:var(--muted);font-size:14px">Measured on vLLM 0.27.1, rented H100 SXM and T4, September 2026. Conditions and raw data are public.</p>
+
+  <h2>What we measure</h2>
+  <ul>
+    <li><b>Billed against served:</b> every paid window marked served, paid with nothing served, or unknown. Never a guess.</li>
+    <li><b>Cold starts:</b> boot, serving and idle tail of each wake, in seconds and dollars. On SGLang the health check said ready while the first request still took 176 seconds more.</li>
+    <li><b>Cost by load:</b> whole-server output at the load you actually run, on vLLM and SGLang.</li>
+    <li><b>Conditions:</b> GPU, host CPU, versions and settings written down, so anyone can repeat it.</li>
+  </ul>
+
+  <h2>Work with us</h2>
+  <ul>
+    <li><b>Measured report for GPU clouds and hardware teams:</b> your GPUs, your prices, published as your own data. From $1,500.</li>
+    <li><b>Cost audit for teams paying the bill:</b> where the money on your GPUs goes. $1,200, paid only after you read the findings.</li>
+  </ul>
+  <p><a class="cta" href="https://github.com/qaisermehdi3-coder/qvunex/blob/main/SAMPLE-REPORT.md">See a sample report</a></p>
+
+  <h2>Open method</h2>
+  <p>The method is public: <a href="https://github.com/qaisermehdi3-coder/qvunex/blob/main/METHOD.md">How to price one GPU wake</a>. The tool is one open-source file with its own self-test: <a href="https://github.com/qaisermehdi3-coder/qvunex">github.com/qaisermehdi3-coder/qvunex</a>.</p>
+
+  <footer>
+    Kaisar Mehdi, Qvunex &middot; <a href="mailto:qvunexaudit@gmail.com">qvunexaudit@gmail.com</a>
+  </footer>
+</main>
+</body>
+</html>
